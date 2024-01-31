@@ -8,7 +8,7 @@ const Hello = () => {
     if(file.files == null) return
     formData.append("file", file.files[0]);
     formData.append("model", "whisper-1")
-    const res = fetch("http://localhost:3000/api/transcriber_base", {
+    const res = fetch("https://transcriptor-nine.vercel.app/api/transcriber_base", {
       method: "POST",
       body: formData,
     })
