@@ -6,8 +6,8 @@ const client = new OpenAI();
 
 export async function POST(req: NextRequest) {
   const form = await req.formData();
-  const file = form.get("file") as File
-  const model = form.get("model") as string
+  const file = form.get("file") as File;
+  const model = form.get("model") as string;
 
   // we can transcribe this way if we want to upload a file from a url
   // const filse = await fetch(
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     model: "whisper-1",
     // this prompt is optional and only supposed to be used if you want to translate the audio
     // prompt: "Translate this text into english"
-  })
+  });
 
   // and this is an equivalent way to call the api
   // const transcription = await fetch("https://api.openai.com/v1/audio/transcriptions", {
@@ -43,6 +43,10 @@ export async function POST(req: NextRequest) {
   //   },
   //   body: formdata,
   // })
-  console.log(transcription.text)
-  return NextResponse.json({ message: "sucess from hello" }, { status: 200 });
+  console.log(transcription.text);
+  // create a response with the transcription and cors headers
+  return NextResponse.json(
+    { transcription: transcription.text },
+    { headers: { "Access-Control-Allow-Origin": "*" }, status: 200 }
+  );
 }
