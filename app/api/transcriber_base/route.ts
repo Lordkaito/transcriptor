@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
   console.log(transcription.text);
   // create a response with the transcription and cors headers
   return NextResponse.json(
-    { transcription: transcription.text },
+    { message: transcription.text },
     { headers: { "Access-Control-Allow-Origin": "*" }, status: 200 }
   );
 }

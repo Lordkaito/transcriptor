@@ -13,7 +13,7 @@ const Hello = () => {
       body: formData,
     })
       .then((res) => res.json())
-      .then((res) => setText(res.text));
+      .then((res) => setText(res.message));
   }
   return (
     <div>
