@@ -1,5 +1,7 @@
 'use client'
+import { useState } from "react";
 const Hello = () => {
+  const [text, setText] = useState<string>("");
   const handleSubmit = () => {
     const file = document.getElementById("file") as HTMLInputElement;
     const formData = new FormData();
@@ -11,12 +13,13 @@ const Hello = () => {
       body: formData,
     })
       .then((res) => res.json())
-      .then((res) => console.log(res));
+      .then((res) => setText(res.text));
   }
   return (
     <div>
       <input type="file" name="file" id="file" />
       <button type="submit" onClick={handleSubmit}>submit</button>
+      <p>{text}</p>
     </div>
   );
 };
