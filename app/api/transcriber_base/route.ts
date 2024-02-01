@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
 
   try {
     // or we can transcribe like this if we want to upload a file from frontend
-    const transcription = await client.audio.translations.create({
+    const transcription = await client.audio.transcriptions.create({
       file: file,
       model: "whisper-1",
       // this prompt is optional and only supposed to be used if you want to translate the audio
