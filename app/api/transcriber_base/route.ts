@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
+export const maxDuration = 60
 const API_KEY = process.env.OPENAI_API_KEY;
 
 const client = new OpenAI();
@@ -27,13 +28,26 @@ export async function POST(req: NextRequest) {
   // this prompt is optional and only supposed to be used if you want to translate the audio
   formdata.append("prompt", "Translate this text into english");
 
-  // or we can transcribe like this if we want to upload a file from frontend
-  const transcription = await client.audio.translations.create({
-    file: file,
-    model: "whisper-1",
-    // this prompt is optional and only supposed to be used if you want to translate the audio
-    // prompt: "Translate this text into english"
-  });
+  try {
+    // or we can transcribe like this if we want to upload a file from frontend
+    const transcription = await client.audio.translations.create({
+      file: file,
+      model: "whisper-1",
+      // this prompt is optional and only supposed to be used if you want to translate the audio
+      // prompt: "Translate this text into english"
+    });
+    console.log(transcription.text);
+    return NextResponse.json(
+      { message: transcription.text },
+      { headers: { "Access-Control-Allow-Origin": "*" }, status: 200 }
+    );
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json(
+      { message: err },
+      { headers: { "Access-Control-Allow-Origin": "*" }, status: 500 }
+    );
+  }
 
   // and this is an equivalent way to call the api
   // const transcription = await fetch("https://api.openai.com/v1/audio/transcriptions", {
@@ -43,10 +57,5 @@ export async function POST(req: NextRequest) {
   //   },
   //   body: formdata,
   // })
-  console.log(transcription.text);
   // create a response with the transcription and cors headers
-  return NextResponse.json(
-    { message: transcription.text },
-    { headers: { "Access-Control-Allow-Origin": "*" }, status: 200 }
-  );
 }
