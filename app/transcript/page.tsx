@@ -29,7 +29,8 @@ const Transcript = () => {
       });
   };
   return (
-    <div className="h-[100dvh] pt-4 flex flex-col content-center text-xl">
+    <div className="h-[100dvh] pt-4 flex flex-col content-center text-xl text-center">
+      <p className="mb-2">Transcribe your audio into text</p>
       <div className="flex gap-4 justify-center content-center h-fit">
         <input type="file" name="file" id="file" />
         {/* <button type="submit" disabled={loading} onClick={handleSubmit}>
